@@ -1,7 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:urban_clean/API/api_provider.dart';
-import 'package:urban_clean/UI/responses/categories_response.dart';
-
+import 'package:urban_clean/cleaning_page.dart';
 import 'constants/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,24 +11,47 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+ var  category ;
+  List itemCount = [] ;
+ var image;
   @override
   void initState(){
-  ApiProvider().processCategory();
-   // // setState(() {
-   //   ApiProvider().processCategory();
-   // //
-   // // });
+    // ApiProvider().processHome();
+setState(() {
+  process();
+
+});
     super.initState();
   }
+ Future process ()async{
+   try{
+     final dio = Dio();
+     final response = await dio.get('http://52.90.154.44:5001/api/getCategoryList',
+     );
 
-  CategoriesResponse categoriesResponse = CategoriesResponse();
+     category = response.data as Map;
+     itemCount = category["categories"];
+     print("billu ${category}");
+     print(itemCount);
+     print(response.data);
+     setState(() {
 
-  List <String> gridText = ["Cleaning","Laundry","Call Service","Painting","Shipping","Bike Service","Handy Men","More","Cleaning","Laundry","Call Service","Painting","Shipping","Bike Service","Handy Men","More"];
+     });
+   }catch(e){
+     var error = e as DioError;
+     // print((error.response!.data as Map)["errors"][0]["message"]);
+     print(error);
+   }
+ }
+  List <String> gridText = ["Cleaning","Laundry","Call Service","Painting","Shipping","Bike Service","Handy Men","More"];
   @override
   Widget build(BuildContext context) {
+
+    print("billla$itemCount");
+
     return Scaffold(
       body: SafeArea(child:
+      // itemCount== null ? CircularProgressIndicator():
       ListView(
         shrinkWrap: true,
         children: [
@@ -101,17 +123,29 @@ class _HomePageState extends State<HomePage> {
                 ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 8,
+                itemCount:itemCount.length,
                 itemBuilder: (BuildContext ctx, index) {
-                  return Column(
-                    children: [
-                    const CircleAvatar(
-                    backgroundColor: Colors.greenAccent,
-                    radius: 30,
-                  ),
-                      const SizedBox(height: 5,),
-                      Text(gridText[index])
-                    ],
+                  return InkWell(
+                   onTap: (){
+                     var title = itemCount[index]["sub_categories"];
+                     // category["categories"][index]["sub_categories"][index][ "category_name"];
+                     // [index]["sub_categories"][index][" category_name"];
+
+                     print("naveen${title}");
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => CleaningPage(title),));
+                   },
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.greenAccent,
+                          radius: 30,
+                          backgroundImage: NetworkImage("${itemCount[index]["image_bg"]}",),
+                        ),
+
+                        const SizedBox(height: 5),
+                        Text(itemCount[index]["title"]),
+                      ],
+                    ),
                   );
                 }),
           Row(
@@ -133,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context,int index){
                     return InkWell(
                       onTap: (){
-                        print("checkkk${categoriesResponse.data?.productDetail?.productName}");
+                        // print("check${categoriesResponse.data?.productDetail?.productName}");
                       },
                       child: Container(
                         padding: const EdgeInsets.all(5),

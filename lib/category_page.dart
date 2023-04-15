@@ -14,13 +14,13 @@ class _CategoryPageState extends State<CategoryPage> {
       {
         "name": "Cleaning",
         "color":0xFFFFE0B2,
-        "icon":0xeeca,
+        "icon":0xef56,
         "icon_color":0xFFFF8F00,
 
       },  {
         "name": "Painting",
         "color":0xFFBBDEFB,
-        "icon":0xeeca,
+        "icon": 0xf0a8,
         "icon_color":0xFF0D47A1,
 
       },  {
@@ -31,36 +31,36 @@ class _CategoryPageState extends State<CategoryPage> {
       },  {
         "name": "Shipping",
         "color":0xFFCE93D8,
-        "icon":0xeeca,
+        "icon":0xf18e,
         "icon_color":0xFF6A1B9A,
       },  {
         "name": "Bike Service",
         "color":0xFFB2EBF2,
-        "icon":0xeeca,
+        "icon":0xeece,
         "icon_color":0xFF00838F,
 
       },  {
         "name": "Handy Men",
         "color":0xFFF8BBD0,
-        "icon":0xeeca,
+        "icon":0xf0df,
         "icon_color":0xFF880E4F,
 
       },  {
         "name": "Car Service",
         "color":0xFFFFF9C4,
-        "icon":0xeeca,
+        "icon":0xef2c,
         "icon_color":0xFFFF8F00,
 
       },  {
         "name": "Roofing",
         "color":0xFFFFD180,
-        "icon":0xeeca,
+        "icon":0xf31d,
         "icon_color":0xFFFF6F00,
 
       },  {
         "name": "Plumbing",
         "color":0xFFFFD180,
-        "icon":0xeeca,
+        "icon":0xf2b8,
         "icon_color":0xFF4527A0,
 
       },
@@ -70,7 +70,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffe9ebf2),
+      backgroundColor: const Color(0xfff4f0f7),
       appBar: AppBar(
         backgroundColor: whiteColor,
         leading: const Icon(
@@ -104,12 +104,12 @@ class _CategoryPageState extends State<CategoryPage> {
                     children: [
                       CircleAvatar(
                         backgroundColor: Color(data["category"][index]["color"]),
-                        radius: 30,
+                        radius: 20,
                         child: Icon(IconData(data["category"][index]["icon"],fontFamily: 'MaterialIcons'),
                           color: Color(data["category"][index]
                         ["icon_color"]),),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       Text(data["category"][index]["name"])
                     ],
                   ),

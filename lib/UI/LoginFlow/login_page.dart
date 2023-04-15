@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:urban_clean/API/api_provider.dart';
 import '../../constants/colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 216, 211, 211),
+      backgroundColor: Color(0xfff4f0f7),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Icon(
@@ -76,6 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextField(
                         controller: emailController,
                         decoration: InputDecoration(
+                            filled: true,
+                            fillColor:  Color(0xfff4f0f7),
                             prefixIcon: Icon(
                               Icons.mail_outline,
                               color: appPrimaryColor,
@@ -93,6 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextField(
                         controller: passwordController,
                           decoration: InputDecoration(
+                              filled: true,
+                              fillColor:  Color(0xfff4f0f7),
                               prefixIcon: Icon(
                                 Icons.lock,
                                 color: appPrimaryColor,
@@ -128,13 +132,19 @@ class _LoginPageState extends State<LoginPage> {
                       height: 40,
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             print(emailController.text);
                             print(passwordController.text);
-                           ApiProvider().processLogin(
-                             emailController.text,
-                             passwordController.text
-                           );
+                            try{
+                              final dio = Dio();
+                              final response = await dio.post('https://admin-stage.myfitindia.com/api/v1/auth/login',
+                                  data : {"phone": "syed@gmail.com", "password" : "Syed@123"}
+                              );
+                              print("Billu bilal ${response.data}");
+                            }catch(e){
+                              var error = e as DioError;
+                              print((error.response!.data as Map)["errors"][0]["message"]);
+                            }
                            //  ApiProvider().processCategory();
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                           },

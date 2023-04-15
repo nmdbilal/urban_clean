@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:urban_clean/constants/colors.dart';
 
 class SigninPage extends StatefulWidget {
+  const SigninPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SigninPageState();
@@ -12,7 +14,7 @@ class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 224, 212, 212),
+      backgroundColor:Color(0xfff4f0f7),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Icon(
@@ -58,6 +60,8 @@ class _SigninPageState extends State<SigninPage> {
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: TextField(
                   decoration: InputDecoration(
+                      filled: true,
+                      fillColor:  Color(0xfff4f0f7),
                       prefixIcon: Icon(
                         Icons.phone_android,
                         color: appPrimaryColor,

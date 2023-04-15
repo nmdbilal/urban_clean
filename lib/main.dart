@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:urban_clean/home_page.dart';
-import 'UI/LoginFlow/new_password.dart';
-
+import 'package:urban_clean/select_location.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.green,
       ),
-      home: HomePage()
+      home: const SelectLocation()
     );
   }
 }

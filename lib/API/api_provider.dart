@@ -39,54 +39,54 @@ class ApiProvider{
       return loginResponse;
     }
   }
+
+  Future<CategoryResponse> processHome() async {
+
+    try {
+      Response response = await _dio.get(
+        // "52.90.154.44:5001/api/getProductDetails"
+        'http://52.90.154.44:5001/api/getCategoryList'
+      );
+
+      print("checkk ${response.data}");
+
+      CategoryResponse categoryResponse = CategoryResponse.fromJson(json.decode(response.toString()));
+      // HomeResponse homeResponse =
+      // HomeResponse.fromJson(json.decode(response.toString()));
+      // print("llllll ${categoriesResponse.data!.productDetail!.productName}");
+      return categoryResponse;
+    } catch (error) {
+      CategoryResponse categoryResponse = CategoryResponse();
+
+      print(error);
+      // categoriesResponse.errorResponse = handleError(error);
+      return categoryResponse;
+    }
+  }
   //
-  // Future<CategoriesResponse> processHome() async {
-  //
+  // Future<CategoriesResponse> processCategory() async {
   //   try {
   //     Response response = await _dio.get(
-  //       // "52.90.154.44:5001/api/getProductDetails"
-  //       "https://a.walletbot.online/api/v1/home/initial-data"
+  //         "52.90.154.44:5001/api/getProductDetails"
   //     );
+  //     print("category ${response.data}");
   //
-  //     print("checkk ${response.data}");
   //
-  //     CategoriesResponse categoriesResponse = CategoriesResponse.fromJson(json.decode(response.toString()));
-  //     // HomeResponse homeResponse =
-  //     // HomeResponse.fromJson(json.decode(response.toString()));
-  //     // print("llllll ${categoriesResponse.data!.productDetail!.productName}");
+  //     CategoriesResponse categoriesResponse =
+  //     CategoriesResponse.fromJson(json.decode(response.toString()));
+  //     print("message ${categoriesResponse}");
+  //
   //     return categoriesResponse;
+  //     // return response.data;
   //   } catch (error) {
   //     CategoriesResponse categoriesResponse = CategoriesResponse();
   //
-  //     print(error);
-  //     // categoriesResponse.errorResponse = handleError(error);
+  //     categoriesResponse.errorResponse = handleError(error);
+  //     // print("erororrrr ${categoriesResponse.errorResponse!.errors!.first.message}");
+  //
   //     return categoriesResponse;
   //   }
   // }
-
-  Future<CategoriesResponse> processCategory() async {
-    try {
-      Response response = await _dio.get(
-          "52.90.154.44:5001/api/getProductDetails"
-      );
-      print("category ${response.data}");
-
-
-      CategoriesResponse categoriesResponse =
-      CategoriesResponse.fromJson(json.decode(response.toString()));
-      print("message ${categoriesResponse}");
-
-      return categoriesResponse;
-      // return response.data;
-    } catch (error) {
-      CategoriesResponse categoriesResponse = CategoriesResponse();
-
-      categoriesResponse.errorResponse = handleError(error);
-      // print("erororrrr ${categoriesResponse.errorResponse!.errors!.first.message}");
-
-      return categoriesResponse;
-    }
-  }
 
 
   ErrorResponse handleError(Object error) {

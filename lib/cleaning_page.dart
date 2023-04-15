@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:urban_clean/constants/colors.dart';
 
 class CleaningPage extends StatefulWidget {
-  const CleaningPage({super.key});
+  final List itemCount;
+  const CleaningPage(this.itemCount,{super.key,
+
+    });
 
   @override
   State<StatefulWidget> createState() {
@@ -47,16 +50,28 @@ class _CleaningPageState extends State<CleaningPage> {
     ]
   };
   @override
+  void initState() {
+    widget.itemCount.forEach((element) {
+      element["count"] = 0;
+    });
+
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
-      backgroundColor:Color(0xffe9ebf2),
+      backgroundColor: Color(0xfff4f0f7),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Icon(
-          Icons.arrow_back_ios_sharp,
+        leading: IconButton(
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back_ios_sharp),
+          // Icons.arrow_back_ios_sharp,
           color: Colors.black,
+
         ),
         title: Text(
           "Cleaning",
@@ -99,7 +114,7 @@ class _CleaningPageState extends State<CleaningPage> {
                 ),
                 ListView.builder(
                     shrinkWrap: true,
-                    itemCount: data["rooms"].length,
+                    itemCount:widget.itemCount!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -114,29 +129,24 @@ class _CleaningPageState extends State<CleaningPage> {
                                         height: 40,
                                         width: 40,
                                         decoration: BoxDecoration(
-                                          color: Color(
-                                              data["rooms"][index]["color"]),
                                           borderRadius:
                                           BorderRadius.circular(7),
                                         ),
                                         child: Icon(
-                                          IconData(data["rooms"][index]["icon"],
+                                          IconData(data["rooms"][0]["icon"],
                                               fontFamily: 'MaterialIcons'),
-                                          color: Color(data["rooms"][index]
+                                          color: Color(data["rooms"][0]
                                           ["icon_color"]),
                                         )),
                                     SizedBox(
-                                      width: 15,
+                                      width: 1,
                                     ),
                                     Text(
-                                      data["rooms"][index]["room_type"],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 15),
+                                      "${widget.itemCount![index]["category_name"]}"
                                     ),
                                   ],
                                 ),
-                                SizedBox(width: 40),
+                                SizedBox(width: 20),
                                 Row(
                                   children: [
                                     Container(
@@ -147,14 +157,19 @@ class _CleaningPageState extends State<CleaningPage> {
                                               255, 245, 195, 211),
                                           borderRadius:
                                           BorderRadius.circular(5)),
-                                      child: Icon(
-                                        Icons.remove,
-                                        color: Colors.black,
+                                      child: InkWell(
+                                        onTap:(){
+                                      setState(() {
+                                       // value--;
+                                        widget.itemCount![index]["count"]--;
+                                      });
+                                      },
+                                        child: Icon(Icons.remove,color: Colors.black,),
                                       ),
                                     ),
                                     SizedBox(width: 20),
                                     Text(
-                                      "2",
+                                      "${widget.itemCount![index]["count"]}",
                                       style: TextStyle(
                                           fontSize: 19,
                                           fontWeight: FontWeight.bold),
@@ -168,11 +183,17 @@ class _CleaningPageState extends State<CleaningPage> {
                                               255, 190, 243, 247),
                                           borderRadius:
                                           BorderRadius.circular(5)),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.black,
+                                      child:InkWell(
+                                        onTap:(){
+                                          setState(() {
+                                            // value++;
+                                            widget.itemCount![index]["count"]++;
+
+                                          });
+                                        },
+                                        child: Icon(Icons.add,color: Colors.black,),
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ],
